@@ -1,0 +1,7 @@
+fields @timestamp, @message
+| parse @message "Operation=*, PID=*, Time=*" as @Operation,
+@PID, @Time
+| filter @message like /executeBidAmountQuery/
+|filter Time>5000
+|sort @timestamp desc
+

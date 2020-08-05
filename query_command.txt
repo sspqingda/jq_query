@@ -1,0 +1,12 @@
+Log Analysis:
+
+less  service_log.2020-07-30-09.a9-ifs-prod-1*| /apollo/env/envImprovement/bin/recs-fromservicelog | grep generateSponsoredDisplayForecast | /apollo/env/envImprovement/bin/jq -C '.PID, .RequestId, .timer.TotalTime.time ' | cat 
+
+
+less service_log.2020-07-31-12.a9-ifs-prod-1* | /apollo/env/envImprovement/bin/recs-fromservicelog | grep RunForecast|/apollo/env/envImprovement/bin/jq -C 'select(.Metrics|test("WEB_REMNANT_EU")) | select(.Time|split(" ")|.[0]|tonumber > 60000) |{PID, Time, ForecastRequestId} |.ForecastRequestId' |cat
+
+
+for id in {8035414,8035502,8035503,8035506,8035528,8035610,8035458,8035508,8035464,8035490,8035523,8035542}; do curl -s https://ad-forecasting.amazon.com/forecasts/$id/components | jq -C '.componentsList|group_by(.placement.identifier)|length '; done
+
+for id in {10329847}; do curl -s https://ad-forecasting-gamma.amazon.com/forecasts/$id/timeseries   | jq -C 'reduce (.dataPoints[]|.availableImpressions) as $item (0; . + $item) '; done      
+

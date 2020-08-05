@@ -1,0 +1,1 @@
+sudo spark-submit --class com.amazon.a9ifstargetingindexemr.emr.scala.MatchingRatioDataTest /home/hadoop/bats/Scala2.11/A9IFSTargetingIndexEMR-1.0.jar --bd 2019-10-30 --testDate 2019-11-05 --region us --sampleRate 0.01 --input s3://samdev-shuping-us-east-1-gamma/index/region=us/dt=2019-10-30
