@@ -1,1 +1,11 @@
 sudo spark-submit --class com.amazon.a9ifstargetingindexemr.emr.scala.MatchingRatioDataTest /home/hadoop/bats/Scala2.11/A9IFSTargetingIndexEMR-1.0.jar --bd 2019-10-30 --testDate 2019-11-05 --region us --sampleRate 0.01 --input s3://samdev-shuping-us-east-1-gamma/index/region=us/dt=2019-10-30
+
+
+rlwrap spark-shell -Xnojline
+if you don’t need lucene, you can make it faster like this
+ rlwrap spark-shell -Xnojline --jars /home/hadoop/bats/lib/AWSGlueDataCatalogHiveMetaStoreAuth-1.0.jar
+ then find out your task instance group id and manually scale it up and down when you need capacity
+ ada credentials update --account=<your dev accoun tid> --provider=conduit --profile=$USER-dev --role=Admin --once; aws --profile $USER-dev --region us-east-1 emr modify-instance-groups --instance-groups InstanceGroupId=<your task instance group id>,InstanceCount=50 
+
+ bids.select(explode($"slots").alias("slot")).select(explode($"slot.requiredInventoryKeyValues").alias("rikv")).groupBy($"rikv").count.orderBy($"count".desc).show(400, false)
+
